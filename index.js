@@ -121,13 +121,7 @@ class Task extends Component {
 class TodoList extends Component {
   constructor() {
     super();
-    this.state = {
-      tasks: [
-        { id: 1, is_done: false, text: "Сделать домашку" },
-        { id: 2, is_done: false, text: "Сделать практику" },
-        { id: 3, is_done: false, text: "Пойти домой" }
-      ]
-    };
+    this.state = JSON.parse(localStorage.getItem("todos")) || { tasks: [] };
   }
 
   handleAddTask = (text) => {
@@ -152,6 +146,7 @@ class TodoList extends Component {
   };
 
   render() {
+    localStorage.setItem("todos", JSON.stringify(this.state));
     const taskElements = this.state.tasks.map(task =>
         new Task(task, this.handleToggleDone, this.handleDeleteTask).getDomNode()
     );
